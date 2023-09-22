@@ -27,7 +27,8 @@
 
 bool NFHelloWorld7::Init()
 {
-    mxRedisClient.Connect("127.0.0.1", 6379, "NoahGameFrame");
+	string password = "123456";
+    mxRedisClient.Connect("127.0.0.1", 6379, password);
 
 
     std::cout << "Hello, world, Init7" << std::endl;

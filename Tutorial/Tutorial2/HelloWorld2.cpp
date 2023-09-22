@@ -54,6 +54,10 @@ bool NFHelloWorld2::AfterInit()
 	//created a object for this test
     NFIObject* pObject = new NFObject(NFGUID(0, 1), pPluginManager);
 
+    pObject->AddProperty("YYTest", TDATA_INT);
+    pObject->SetPropertyInt("YYTest", 666);
+    std::cout << "Property YYTest:" << pObject->GetPropertyFloat("YYTest") << std::endl;
+
 	//add a property name is "Hello" for this object
     pObject->GetPropertyManager()->AddProperty(pObject->Self(), "Hello", TDATA_STRING);
 	//add a property name is "World" for this object

@@ -12,7 +12,7 @@ add_subdirectory(NFNoSqlPlugin)
 add_subdirectory(NFTestPlugin)
 add_subdirectory(NFLuaScriptPlugin)
 
-if (APPLE)
+if (APPLE OR WIN32)
     add_subdirectory(NFRenderPlugin)
     add_subdirectory(NFBluePrintPlugin)
 endif()

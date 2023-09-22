@@ -49,7 +49,7 @@ const int Tutorial4Plugin::GetPluginVersion()
 
 const std::string Tutorial4Plugin::GetPluginName()
 {
-	return GET_CLASS_NAME(Tutorial4Plugin);
+    return "Tutorial4";// GET_CLASS_NAME(Tutorial4Plugin);
 }
 
 void Tutorial4Plugin::Install()

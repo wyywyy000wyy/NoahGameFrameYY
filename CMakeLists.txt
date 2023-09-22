@@ -19,12 +19,15 @@ endif(APPLE)
 
 set(SolutionDir ${PROJECT_SOURCE_DIR})
 
-if( CMAKE_BUILD_TYPE STREQUAL "Debug" )
-	set(NFOutPutDir ${PROJECT_SOURCE_DIR}/_Out/Debug)
+if(WIN32)
+	set(NFOutPutDir ${PROJECT_SOURCE_DIR}/_Out)
 else()
-	set(NFOutPutDir ${PROJECT_SOURCE_DIR}/_Out/Release)
+	if( CMAKE_BUILD_TYPE STREQUAL "Debug" )
+		set(NFOutPutDir ${PROJECT_SOURCE_DIR}/_Out/Debug)
+	else()
+		set(NFOutPutDir ${PROJECT_SOURCE_DIR}/_Out/Release)
+	endif()
 endif()
-
 
 message("NFOutPutDir:${NFOutPutDir}")
 
@@ -87,7 +90,8 @@ if(UNIX)
 		add_definitions(-std=c++17)
 	endif()
 else()
-	SET ( CMAKE_CXX_FLAGS "-D_X64 -D_WINDOWS /EHsc" )
+	set(CMAKE_CXX_STANDARD 17)
+	SET ( CMAKE_CXX_FLAGS "-D_X64 -D_WINDOWS /EHsc /MT" )
 	include_directories(${SolutionDir}/Dependencies/libevent/WIN32-Code/)
 endif()
 

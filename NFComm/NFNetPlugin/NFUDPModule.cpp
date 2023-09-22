@@ -29,19 +29,19 @@
 #define BUF_SIZE                        14500
 //500
 
-static void udp_cb(const int sock, short int which, void *arg)
+static void udp_cb(intptr_t sock, short int which, void *arg)
 {
 	NFUDPModule* udpModule = (NFUDPModule*)arg;
 
 
 	struct sockaddr_in client_addr;
-	socklen_t size = sizeof(client_addr);
+	int size = sizeof(client_addr);
 	char buf[BUF_SIZE];
 	std::string  data(buf);
 	std::cout << std::this_thread::get_id() << " received:" << data.length() << std::endl;
 
 	/* Recv the data, store the address of the sender in server_sin */
-	if (recvfrom(sock, &buf, sizeof(buf) - 1, 0, (struct sockaddr *) &client_addr, &size) == -1)
+	if (recvfrom(sock, buf, sizeof(buf) - 1, 0, (struct sockaddr *) &client_addr, &size) == -1)
 	{
 		perror("recvfrom()");
 		//event_loopbreak();
@@ -58,7 +58,7 @@ static void udp_cb(const int sock, short int which, void *arg)
 int bind_socket(struct event *ev, int port, void* p)
 {
 	int                 sock_fd;
-	int                 flag = 1;
+	char                 flag = 1;
 	struct sockaddr_in  sin;
 	sock_fd = socket(AF_INET, SOCK_DGRAM, 0);
 	if (sock_fd < 0)

@@ -49,7 +49,7 @@ bool NFHelloWorld4Module::AfterInit()
 	///////////////////////////
 	std::cout << "start Benchmarks " << std::endl;
 	//100M
-	int messageCount = 1000000;
+	int messageCount = 10;
 	{
 		std::cout << "Test for ConcurrentQueue" << std::endl;
 		moodycamel::ConcurrentQueue<int> q;
@@ -65,16 +65,17 @@ bool NFHelloWorld4Module::AfterInit()
 
 				int64_t timeStart = NFGetTimeMS();
 
+				int base = i * messageCount;
 				for (int j = 0; j != messageCount; ++j)
 				{
-					q.enqueue(j);
+					q.enqueue(base + j);
 				}
 
 				int64_t timeEnd = NFGetTimeMS();
 				int64_t timeCost = timeEnd - timeStart;
 				if (timeCost > 0)
 				{
-					std::cout << "end Benchmarks, cost: " << timeCost << "ms for " << messageCount << ", qps: " << (messageCount / timeCost) * 1000 << std::endl;
+					//std::cout << "++++++produce, cost: " << timeCost << "ms for " << messageCount << ", qps: " << (messageCount / timeCost) * 1000 << std::endl;
 				}
 			});
 		}
@@ -86,9 +87,9 @@ bool NFHelloWorld4Module::AfterInit()
 				int item;
 				for (int j = 0; j != 20; ++j)
 				{
-					//if (q.try_dequeue(item))
+					if (q.try_dequeue(item))
 					{
-
+						std::cout << "------consume  " << item << std::endl;
 					}
 				}
 			});
